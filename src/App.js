@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 import { Footer } from "./components/views/Footer";
-import { Navigation } from "./components/views/Navigation";
+import { Header } from "./components/views/Header";
 
 export const App = () => {
   return (
@@ -8,7 +8,7 @@ export const App = () => {
       <Container
         style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
       >
-        <Navigation />
+        <Header />
         <h1>Hello World</h1>
         <Footer />
       </Container>
