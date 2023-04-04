@@ -7,6 +7,7 @@ import { store } from "./redux/store";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/normalize.scss";
+import "./styles/typography.scss";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
