@@ -7,8 +7,6 @@ import { Loading } from "./Loading";
 export const RenderTable = () => {
   const tablesData = useSelector(selectTables);
 
-  console.log(tablesData);
-
   return (
     <>
       {tablesData.length === 0 ? (
