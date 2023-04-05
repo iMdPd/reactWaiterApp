@@ -6,7 +6,6 @@ import { selectTables } from "../../redux/tablesRedux";
 export const RenderTable = () => {
   const tablesData = useSelector(selectTables);
 
-  console.log(tablesData);
   return (
     <>
       {tablesData.map(({ id, status }) => (
