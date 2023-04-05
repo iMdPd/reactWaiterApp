@@ -1,0 +1,32 @@
+import { Stack, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { selectTables } from "../../redux/tablesRedux";
+
+export const RenderTable = () => {
+  const tablesData = useSelector(selectTables);
+
+  console.log(tablesData);
+  return (
+    <>
+      {tablesData.map(({ id, status }) => (
+        <div key={id}>
+          <Stack
+            style={{ marginTop: "20px", marginBottom: "20px" }}
+            direction="horizontal"
+            gap={3}
+          >
+            <h1>Table {id}</h1>
+            <p className="me-auto" style={{ margin: "0" }}>
+              <b>Status:</b> {status}
+            </p>
+            <Button variant="outline-primary" as={NavLink} to={`table/${id}`}>
+              Show More...
+            </Button>
+          </Stack>
+          <hr style={{ margin: "0" }} />
+        </div>
+      ))}
+    </>
+  );
+};
