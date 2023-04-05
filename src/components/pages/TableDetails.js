@@ -5,5 +5,9 @@ export const TableDetails = () => {
 
   console.log(id);
 
-  return <h1>Table Details</h1>;
+  return (
+    <>
+      <h1>Table {id}</h1>
+    </>
+  );
 };
