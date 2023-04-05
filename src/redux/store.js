@@ -12,7 +12,6 @@ const reducer = combineReducers(subreducers);
 export const store = createStore(
   reducer,
   initialState,
-
   compose(
     applyMiddleware(thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__
