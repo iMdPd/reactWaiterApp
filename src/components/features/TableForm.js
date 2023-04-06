@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { patchTableDetails } from "../../redux/tablesRedux";
+import { useNavigate } from "react-router-dom";
 
 export const TableForm = (param) => {
+  const dispach = useDispatch();
+  const navigate = useNavigate();
+
   const [status, setStatus] = useState(`${param.status}`);
   const [peopleAmount, setPeopleAmount] = useState(`${param.peopleAmount}`);
   const [maxPeopleAmount, setMaxPeopleAmount] = useState(
@@ -9,11 +15,21 @@ export const TableForm = (param) => {
   );
   const [bill, setBill] = useState(`${param.bill}`);
 
-  const verifyTableStatus = () =>
-    status === "Cleaning" || status === "Free" ? 0 : peopleAmount;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispach(
+      patchTableDetails(param.id, {
+        status,
+        peopleAmount,
+        maxPeopleAmount,
+        bill,
+      })
+    );
+    navigate("/");
+  };
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Form.Group as={Row} className="mb-3" controlId="tableStatus">
         <Form.Label column sm={4}>
           Status:
@@ -44,7 +60,7 @@ export const TableForm = (param) => {
           <Col sm={3}>
             <Form.Control
               type="text"
-              value={verifyTableStatus()}
+              value={peopleAmount}
               onChange={(e) => setPeopleAmount(e.target.value)}
             />
           </Col>
