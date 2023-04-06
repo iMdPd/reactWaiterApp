@@ -3,6 +3,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { patchTableDetails } from "../../redux/tablesRedux";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 export const TableForm = (param) => {
   const dispach = useDispatch();
@@ -97,4 +98,12 @@ export const TableForm = (param) => {
       </Form.Group>
     </Form>
   );
+};
+
+TableForm.propTypes = {
+  bill: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  maxPeopleAmount: PropTypes.string.isRequired,
+  peopleAmount: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };
