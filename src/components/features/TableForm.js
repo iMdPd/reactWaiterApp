@@ -1,6 +1,14 @@
+import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
-export const TableForm = ({ status, peopleAmount, maxPeopleAmount, bill }) => {
+export const TableForm = (param) => {
+  const [status, setStatus] = useState(`${param.status}`);
+  const [peopleAmount, setPeopleAmount] = useState(`${param.peopleAmount}`);
+  const [maxPeopleAmount, setMaxPeopleAmount] = useState(
+    `${param.maxPeopleAmount}`
+  );
+  const [bill, setBill] = useState(`${param.bill}`);
+
   return (
     <Form>
       <Form.Group as={Row} className="mb-3" controlId="tableStatus">
@@ -8,7 +16,11 @@ export const TableForm = ({ status, peopleAmount, maxPeopleAmount, bill }) => {
           Status:
         </Form.Label>
         <Col sm={8}>
-          <Form.Select aria-label="Select status" defaultValue={status}>
+          <Form.Select
+            aria-label="Select status"
+            defaultValue={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
             <option value="Free">Free</option>
             <option value="Reserved">Reserved</option>
             <option value="Busy">Busy</option>
@@ -27,11 +39,19 @@ export const TableForm = ({ status, peopleAmount, maxPeopleAmount, bill }) => {
             People:
           </Form.Label>
           <Col sm={3}>
-            <Form.Control type="text" value={peopleAmount} />
+            <Form.Control
+              type="text"
+              value={peopleAmount}
+              onChange={(e) => setPeopleAmount(e.target.value)}
+            />
           </Col>
           /
           <Col sm={3}>
-            <Form.Control type="text" value={maxPeopleAmount} />
+            <Form.Control
+              type="text"
+              value={maxPeopleAmount}
+              onChange={(e) => setMaxPeopleAmount(e.target.value)}
+            />
           </Col>
         </Row>
       </Form.Group>
@@ -41,7 +61,13 @@ export const TableForm = ({ status, peopleAmount, maxPeopleAmount, bill }) => {
           Bill:
         </Form.Label>
         <Col sm={4} className="d-flex align-items-center">
-          <Form.Control type="text" className="me-2" value={bill} /> $
+          <Form.Control
+            type="text"
+            className="me-2"
+            value={bill}
+            onChange={(e) => setBill(e.target.value)}
+          />{" "}
+          $
         </Col>
       </Form.Group>
 
