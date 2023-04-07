@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { patchTableDetails } from "../../redux/tablesRedux";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useForm } from "react-hook-form";
 
 export const TableForm = (param) => {
   const dispach = useDispatch();
@@ -16,8 +17,13 @@ export const TableForm = (param) => {
   );
   const [bill, setBill] = useState(`${param.bill}`);
 
+  const {
+    register,
+    handleSubmit: validate,
+    formState: { errors },
+  } = useForm();
+
   const handleSubmit = (e) => {
-    e.preventDefault();
     dispach(
       patchTableDetails(param.id, {
         status,
@@ -29,17 +35,37 @@ export const TableForm = (param) => {
     navigate("/");
   };
 
+  if (maxPeopleAmount > 10) setMaxPeopleAmount("10");
+  if (maxPeopleAmount < 0) setMaxPeopleAmount("0");
+  if (peopleAmount > 10) setPeopleAmount("10");
+  if (peopleAmount < 0) setPeopleAmount("0");
+  if (Number(peopleAmount) > Number(maxPeopleAmount))
+    setPeopleAmount(maxPeopleAmount);
+  if (bill < 0) setBill(0);
+
+  const handlePeopleAmount = (e) =>
+    e.target.value === "Free"
+      ? setPeopleAmount("0")
+      : e.target.value === "Cleaning"
+      ? setPeopleAmount("0")
+      : e.target.value === "Busy"
+      ? setBill("0")
+      : null;
+
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={validate(handleSubmit)}>
       <Form.Group as={Row} className="mb-3" controlId="tableStatus">
-        <Form.Label column sm={4}>
+        <Form.Label column xs={4}>
           Status:
         </Form.Label>
-        <Col sm={8}>
+        <Col xs={8}>
           <Form.Select
             aria-label="Select status"
             defaultValue={status}
-            onChange={(e) => setStatus(e.target.value)}
+            onChange={(e) => {
+              handlePeopleAmount(e);
+              setStatus(e.target.value);
+            }}
           >
             <option value="Free">Free</option>
             <option value="Reserved">Reserved</option>
@@ -55,34 +81,46 @@ export const TableForm = (param) => {
         controlId="tablePeople"
       >
         <Row className="d-flex align-items-center">
-          <Form.Label column sm={4}>
+          <Form.Label column xs={4}>
             People:
           </Form.Label>
-          <Col sm={3}>
+          <Col xs={3}>
             <Form.Control
+              {...register("peopleValue", { required: true, max: 10, min: 0 })}
               type="text"
               value={peopleAmount}
               onChange={(e) => setPeopleAmount(e.target.value)}
             />
           </Col>
           /
-          <Col sm={3}>
+          <Col xs={3}>
             <Form.Control
               type="text"
               value={maxPeopleAmount}
               onChange={(e) => setMaxPeopleAmount(e.target.value)}
             />
           </Col>
+          {errors.peopleValue && (
+            <small className="d-flex justify-content-center text-danger mt-1">
+              Please input number from range 1 to 10.
+            </small>
+          )}
         </Row>
       </Form.Group>
 
       {status === "Busy" && (
-        <Form.Group as={Row} className="mb-3" controlId="tableBill">
-          <Form.Label column sm={4}>
+        <Form.Group
+          as={Row}
+          className="mb-3"
+          style={{ maxWidth: "325px" }}
+          controlId="tableBill"
+        >
+          <Form.Label column xs={4}>
             Bill:
           </Form.Label>
-          <Col sm={4} className="d-flex align-items-center">
+          <Col xs={4} className="d-flex align-items-center">
             <Form.Control
+              {...register("bill", { required: true, min: 0 })}
               type="text"
               className="me-2"
               value={bill}
@@ -90,9 +128,13 @@ export const TableForm = (param) => {
             />{" "}
             $
           </Col>
+          {errors.bill && (
+            <small className="d-flex justify-content-center text-danger mt-1">
+              This field can't be empty.
+            </small>
+          )}
         </Form.Group>
       )}
-
       <Form.Group className="d-flex justify-content-center mt-4">
         <Button type="submit">Update</Button>
       </Form.Group>

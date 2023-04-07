@@ -14,6 +14,7 @@ export const updateTableDitails = (payload) => ({
   type: UPDATE_TABLE_DETAILS,
   payload,
 });
+
 export const fetchTables = () => {
   return (dispatch) => {
     fetch("http://localhost:3131/api/tables")
@@ -21,8 +22,8 @@ export const fetchTables = () => {
       .then((data) => dispatch(updateTables(data)));
   };
 };
+
 export const patchTableDetails = (id, tableDitails) => {
-  console.log(id, tableDitails);
   return (dispach) => {
     const options = {
       method: "PATCH",
@@ -42,8 +43,10 @@ export const tablesReducer = (statePart = [], action) => {
   switch (action.type) {
     case UPDATE_TABLES:
       return [...action.payload];
+
     case UPDATE_TABLE_DETAILS:
-      return [...statePart, { ...action.payload }];
+      return [...statePart, action.payload];
+
     default:
       return statePart;
   }
