@@ -11,7 +11,6 @@ export const RenderTable = ({ id, status }) => {
   const dispatch = useDispatch();
 
   const handleRemoveTable = (id) => {
-    console.log(id);
     setModalShow(false);
     dispatch(deleteTable(id));
   };

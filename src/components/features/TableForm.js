@@ -1,21 +1,15 @@
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { patchTableDetails } from "../../redux/tablesRedux";
-import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 
-export const TableForm = (param) => {
-  const dispach = useDispatch();
-  const navigate = useNavigate();
-
-  const [status, setStatus] = useState(`${param.status}`);
-  const [peopleAmount, setPeopleAmount] = useState(`${param.peopleAmount}`);
+export const TableForm = ({ action, ...params }) => {
+  const [status, setStatus] = useState(params.status || "selected");
+  const [peopleAmount, setPeopleAmount] = useState(params.peopleAmount || "0");
   const [maxPeopleAmount, setMaxPeopleAmount] = useState(
-    `${param.maxPeopleAmount}`
+    params.maxPeopleAmount || "0"
   );
-  const [bill, setBill] = useState(`${param.bill}`);
+  const [bill, setBill] = useState(params.bill || "0");
 
   const {
     register,
@@ -23,16 +17,13 @@ export const TableForm = (param) => {
     formState: { errors },
   } = useForm();
 
-  const handleSubmit = (e) => {
-    dispach(
-      patchTableDetails(param.id, {
-        status,
-        peopleAmount,
-        maxPeopleAmount,
-        bill,
-      })
-    );
-    navigate("/");
+  const handleSubmit = () => {
+    action({
+      status,
+      peopleAmount,
+      maxPeopleAmount,
+      bill,
+    });
   };
 
   if (maxPeopleAmount > 10) setMaxPeopleAmount("10");
@@ -60,6 +51,9 @@ export const TableForm = (param) => {
         </Form.Label>
         <Col xs={8}>
           <Form.Select
+            {...register("category", {
+              validate: (value) => value !== "selected",
+            })}
             aria-label="Select status"
             defaultValue={status}
             onChange={(e) => {
@@ -67,11 +61,19 @@ export const TableForm = (param) => {
               setStatus(e.target.value);
             }}
           >
+            <option value="selected" disabled>
+              Select status
+            </option>
             <option value="Free">Free</option>
             <option value="Reserved">Reserved</option>
             <option value="Busy">Busy</option>
             <option value="Cleaning">Cleaning</option>
           </Form.Select>
+          {errors.category && (
+            <small className="d-block form-text text-danger mt-2">
+              Please select a status.
+            </small>
+          )}
         </Col>
       </Form.Group>
 
@@ -143,9 +145,10 @@ export const TableForm = (param) => {
 };
 
 TableForm.propTypes = {
-  bill: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  maxPeopleAmount: PropTypes.string.isRequired,
-  peopleAmount: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
+  action: PropTypes.func,
+  bill: PropTypes.string,
+  id: PropTypes.string,
+  maxPeopleAmount: PropTypes.string,
+  peopleAmount: PropTypes.string,
+  status: PropTypes.string,
 };

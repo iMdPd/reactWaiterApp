@@ -10,7 +10,7 @@ export const Home = () => {
 
   return (
     <>
-      <Stack direction="horizontal" gap={3}>
+      <Stack className="mb-3" direction="horizontal" gap={3}>
         <h1>All tables</h1>
         <Button
           className="ms-auto"

@@ -1,12 +1,20 @@
 import { Col, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { Navigate, useParams } from "react-router-dom";
-import { selectTableById } from "../../redux/tablesRedux";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { patchTableDetails, selectTableById } from "../../redux/tablesRedux";
 import { TableForm } from "../features/TableForm";
 
 export const TableDetails = () => {
+  const dispach = useDispatch();
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const tableData = useSelector((state) => selectTableById(state, id));
+
+  const handleUpdateTableDetails = (table) => {
+    dispach(patchTableDetails({ ...table }, id));
+    navigate("/");
+  };
 
   if (!tableData) return <Navigate to="/" />;
   return (
@@ -30,7 +38,7 @@ export const TableDetails = () => {
           >
             <h1 className="mb-4">Table {id}</h1>
 
-            <TableForm {...tableData} />
+            <TableForm action={handleUpdateTableDetails} {...tableData} />
           </Col>
         </Row>
       </div>
