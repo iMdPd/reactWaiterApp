@@ -11,8 +11,8 @@ export const TableDetails = () => {
   const { id } = useParams();
   const tableData = useSelector((state) => selectTableById(state, id));
 
-  const handleUpdateTableDetails = (table) => {
-    dispach(patchTableDetails({ ...table }, id));
+  const handleUpdateTableDetails = (tableDetails) => {
+    dispach(patchTableDetails({ ...tableDetails }, id));
     navigate("/");
   };
 

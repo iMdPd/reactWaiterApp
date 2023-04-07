@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { RemoveTableModal } from "./RemoveTableModal";
 import PropTypes from "prop-types";
-import { deleteTable } from "../../redux/tablesRedux";
+import { removeTableRequest } from "../../redux/tablesRedux";
 
 export const RenderTable = ({ id, status }) => {
   const [modalShow, setModalShow] = useState(false);
@@ -12,7 +12,7 @@ export const RenderTable = ({ id, status }) => {
 
   const handleRemoveTable = (id) => {
     setModalShow(false);
-    dispatch(deleteTable(id));
+    dispatch(removeTableRequest(id));
   };
 
   return (
