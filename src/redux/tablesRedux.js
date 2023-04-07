@@ -7,6 +7,7 @@ export const selectTableById = ({ tables }, id) =>
 const createActionName = (actionName) => `app/tables/${actionName}`;
 const UPDATE_TABLES = createActionName("UPDATE_TABLES");
 const UPDATE_TABLE_DETAILS = createActionName("UPDATE_TABLES");
+const REMOVE_TABLE = createActionName("REMOVE_TABLE");
 
 /* ACTION CREATORS */
 export const updateTables = (payload) => ({ type: UPDATE_TABLES, payload });
@@ -24,7 +25,7 @@ export const fetchTables = () => {
 };
 
 export const patchTableDetails = (id, tableDitails) => {
-  return (dispach) => {
+  return (dispatch) => {
     const options = {
       method: "PATCH",
       headers: {
@@ -34,9 +35,17 @@ export const patchTableDetails = (id, tableDitails) => {
     };
 
     fetch(`http://localhost:3131/api/tables/${id}`, options).then(() =>
-      dispach(updateTableDitails(tableDitails))
+      dispatch(updateTableDitails(tableDitails))
     );
   };
+};
+
+export const deleteTable = (id) => {
+  const options = {
+    method: "DELETE",
+  };
+
+  fetch(`http://localhost:3131/api/tables/${id}`, options);
 };
 
 export const tablesReducer = (statePart = [], action) => {
@@ -46,6 +55,9 @@ export const tablesReducer = (statePart = [], action) => {
 
     case UPDATE_TABLE_DETAILS:
       return [...statePart, action.payload];
+
+    case REMOVE_TABLE:
+      return [...statePart.filter((post) => post.id !== action.payload)];
 
     default:
       return statePart;

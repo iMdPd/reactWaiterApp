@@ -11,6 +11,7 @@ export const TableDetails = () => {
   if (!tableData) return <Navigate to="/" />;
   return (
     <>
+      <h1>Table Details</h1>
       <div
         style={{
           display: "flex",
@@ -18,7 +19,7 @@ export const TableDetails = () => {
           justifyContent: "center",
         }}
       >
-        <Row>
+        <Row style={{ transform: "translateY(200px)" }}>
           <Col
             style={{
               border: "1px solid #d1cdcd",
