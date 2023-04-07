@@ -9,9 +9,7 @@ export const AddTable = () => {
   const dispatch = useDispatch();
 
   const allTables = useSelector(selectTables);
-
   const allTableId = allTables.map((table) => Number(table.id));
-
   const newTableId = Math.max(...allTableId) + 1;
 
   const handleAddTable = (tableDetails) => {

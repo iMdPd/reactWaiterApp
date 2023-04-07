@@ -6,7 +6,7 @@ export const selectTableById = ({ tables }, id) =>
 /* ACTIONS NAMES */
 const createActionName = (actionName) => `app/tables/${actionName}`;
 const UPDATE_TABLES = createActionName("UPDATE_TABLES");
-const UPDATE_TABLE_DETAILS = createActionName("UPDATE_TABLE_DETAILS");
+const EDIT_TABLE = createActionName("EDIT_TABLE");
 const REMOVE_TABLE = createActionName("REMOVE_TABLE");
 const ADD_TABLE = createActionName("ADD_TABLE");
 
@@ -50,12 +50,12 @@ export const removeTableRequest = (id) => {
   };
 };
 
-export const updateTableDitails = (payload) => ({
-  type: UPDATE_TABLE_DETAILS,
+export const editTable = (payload) => ({
+  type: EDIT_TABLE,
   payload,
 });
 
-export const patchTableDetails = (tableDitails, id) => {
+export const editTableRequest = (tableDitails, id) => {
   return (dispatch) => {
     const options = {
       method: "PATCH",
@@ -66,7 +66,7 @@ export const patchTableDetails = (tableDitails, id) => {
     };
 
     fetch(`http://localhost:3131/api/tables/${id}`, options).then(() =>
-      dispatch(updateTableDitails({ ...tableDitails, id }))
+      dispatch(editTable({ ...tableDitails, id }))
     );
   };
 };
@@ -76,16 +76,16 @@ export const tablesReducer = (statePart = [], action) => {
     case UPDATE_TABLES:
       return [...action.payload];
 
-    case UPDATE_TABLE_DETAILS:
-      return statePart.map((table) =>
-        table.id === action.payload.id ? { ...table, ...action.payload } : table
-      );
+    case ADD_TABLE:
+      return [...statePart, action.payload];
 
     case REMOVE_TABLE:
       return [...statePart.filter((post) => post.id !== action.payload)];
 
-    case ADD_TABLE:
-      return [...statePart, action.payload];
+    case EDIT_TABLE:
+      return statePart.map((table) =>
+        table.id === action.payload.id ? { ...table, ...action.payload } : table
+      );
 
     default:
       return statePart;

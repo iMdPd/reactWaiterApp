@@ -1,7 +1,7 @@
 import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { patchTableDetails, selectTableById } from "../../redux/tablesRedux";
+import { editTableRequest, selectTableById } from "../../redux/tablesRedux";
 import { TableForm } from "../features/TableForm";
 
 export const TableDetails = () => {
@@ -11,8 +11,8 @@ export const TableDetails = () => {
   const { id } = useParams();
   const tableData = useSelector((state) => selectTableById(state, id));
 
-  const handleUpdateTableDetails = (tableDetails) => {
-    dispach(patchTableDetails({ ...tableDetails }, id));
+  const handleEditTable = (tableDetails) => {
+    dispach(editTableRequest({ ...tableDetails }, id));
     navigate("/");
   };
 
@@ -38,7 +38,7 @@ export const TableDetails = () => {
           >
             <h1 className="mb-4">Table {id}</h1>
 
-            <TableForm action={handleUpdateTableDetails} {...tableData} />
+            <TableForm action={handleEditTable} {...tableData} />
           </Col>
         </Row>
       </div>

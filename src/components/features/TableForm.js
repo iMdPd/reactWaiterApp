@@ -17,15 +17,6 @@ export const TableForm = ({ action, ...params }) => {
     formState: { errors },
   } = useForm();
 
-  const handleSubmit = () => {
-    action({
-      status,
-      peopleAmount,
-      maxPeopleAmount,
-      bill,
-    });
-  };
-
   if (maxPeopleAmount > 10) setMaxPeopleAmount("10");
   if (maxPeopleAmount < 0) setMaxPeopleAmount("0");
   if (peopleAmount > 10) setPeopleAmount("10");
@@ -42,6 +33,15 @@ export const TableForm = ({ action, ...params }) => {
       : e.target.value === "Busy"
       ? setBill("0")
       : null;
+
+  const handleSubmit = () => {
+    action({
+      status,
+      peopleAmount,
+      maxPeopleAmount,
+      bill,
+    });
+  };
 
   return (
     <Form onSubmit={validate(handleSubmit)}>
