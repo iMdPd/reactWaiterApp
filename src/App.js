@@ -8,6 +8,7 @@ import { Header } from "./components/views/Header";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchTables } from "./redux/tablesRedux";
+import { AddTable } from "./components/pages/AddTable";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/table/add" element={<AddTable />} />
           <Route path="/table/:id" element={<TableDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
