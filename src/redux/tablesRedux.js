@@ -6,9 +6,9 @@ export const selectTableById = ({ tables }, id) =>
 /* ACTIONS NAMES */
 const createActionName = (actionName) => `app/tables/${actionName}`;
 const UPDATE_TABLES = createActionName("UPDATE_TABLES");
-const EDIT_TABLE = createActionName("EDIT_TABLE");
-const REMOVE_TABLE = createActionName("REMOVE_TABLE");
 const ADD_TABLE = createActionName("ADD_TABLE");
+const REMOVE_TABLE = createActionName("REMOVE_TABLE");
+const EDIT_TABLE = createActionName("EDIT_TABLE");
 
 /* ACTION CREATORS */
 export const updateTables = (payload) => ({ type: UPDATE_TABLES, payload });
