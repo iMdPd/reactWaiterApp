@@ -6,14 +6,15 @@ import { TableForm } from "../features/TableForm";
 import { Loading } from "../features/Loading";
 
 export const TableDetails = () => {
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { id } = useParams();
+
   const tableData = useSelector((state) => selectTableById(state, id));
 
   const handleEditTable = (tableDetails) => {
-    dispach(editTableRequest({ ...tableDetails }, id));
+    dispatch(editTableRequest({ ...tableDetails }, id));
     navigate("/");
   };
 
@@ -22,7 +23,7 @@ export const TableDetails = () => {
     <>
       <h1>Table Details</h1>
 
-      {tableData === 0 ? (
+      {tableData === undefined ? (
         <Loading />
       ) : (
         <div
