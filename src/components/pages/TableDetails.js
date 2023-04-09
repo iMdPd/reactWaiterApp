@@ -23,8 +23,6 @@ export const TableDetails = () => {
     navigate("/");
   };
 
-  console.log(tableData);
-
   if (allTables.length !== 0 && tableData === undefined)
     return <Navigate to="/" />;
   return (
