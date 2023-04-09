@@ -1,7 +1,11 @@
 import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { editTableRequest, selectTableById } from "../../redux/tablesRedux";
+import {
+  editTableRequest,
+  selectTableById,
+  selectTables,
+} from "../../redux/tablesRedux";
 import { TableForm } from "../features/TableForm";
 import { Loading } from "../features/Loading";
 
@@ -11,6 +15,7 @@ export const TableDetails = () => {
 
   const { id } = useParams();
 
+  const allTables = useSelector(selectTables);
   const tableData = useSelector((state) => selectTableById(state, id));
 
   const handleEditTable = (tableDetails) => {
@@ -18,7 +23,10 @@ export const TableDetails = () => {
     navigate("/");
   };
 
-  if (!tableData) return <Navigate to="/" />;
+  console.log(tableData);
+
+  if (allTables.length !== 0 && tableData === undefined)
+    return <Navigate to="/" />;
   return (
     <>
       <h1>Table Details</h1>

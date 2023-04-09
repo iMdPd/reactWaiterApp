@@ -21,8 +21,7 @@ export const TableForm = ({ action, ...params }) => {
   if (maxPeopleAmount < 0) setMaxPeopleAmount("0");
   if (peopleAmount > 10) setPeopleAmount("10");
   if (peopleAmount < 0) setPeopleAmount("0");
-  if (Number(peopleAmount) > Number(maxPeopleAmount))
-    setPeopleAmount(maxPeopleAmount);
+  if (+peopleAmount > +maxPeopleAmount) setPeopleAmount(maxPeopleAmount);
   if (bill < 0) setBill(0);
 
   const handlePeopleAmount = (e) =>
@@ -88,8 +87,14 @@ export const TableForm = ({ action, ...params }) => {
           </Form.Label>
           <Col xs={3}>
             <Form.Control
-              {...register("peopleValue", { required: true, max: 10, min: 0 })}
-              type="text"
+              {...register("peopleValue", {
+                typeOf: "number",
+                required: true,
+                max: 10,
+                min: 0,
+              })}
+              type="number"
+              maxLength={2}
               value={peopleAmount}
               onChange={(e) => setPeopleAmount(e.target.value)}
             />
@@ -97,7 +102,8 @@ export const TableForm = ({ action, ...params }) => {
           /
           <Col xs={3}>
             <Form.Control
-              type="text"
+              type="number"
+              maxLength={2}
               value={maxPeopleAmount}
               onChange={(e) => setMaxPeopleAmount(e.target.value)}
             />
@@ -123,9 +129,10 @@ export const TableForm = ({ action, ...params }) => {
           <Col xs={4} className="d-flex align-items-center">
             <Form.Control
               {...register("bill", { required: true, min: 0 })}
-              type="text"
+              type="number"
               className="me-2"
               value={bill}
+              max={4}
               onChange={(e) => setBill(e.target.value)}
             />{" "}
             $
