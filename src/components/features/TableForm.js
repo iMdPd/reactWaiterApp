@@ -127,13 +127,13 @@ export const TableForm = ({ action, ...params }) => {
           <Form.Label column xs={4}>
             Bill:
           </Form.Label>
-          <Col xs={4} className="d-flex align-items-center">
+          <Col xs={5} className="d-flex align-items-center">
             <Form.Control
               {...register("bill", { required: true, min: 0 })}
               type="number"
               className="me-2"
               value={bill}
-              max={4}
+              maxLength={4}
               onChange={(e) => setBill(e.target.value)}
             />{" "}
             $
