@@ -103,6 +103,12 @@ export const TableForm = ({ action, ...params }) => {
           /
           <Col xs={3}>
             <Form.Control
+              {...register("peopleValue", {
+                typeOf: "number",
+                required: true,
+                max: 10,
+                min: 0,
+              })}
               type="number"
               maxLength={2}
               value={maxPeopleAmount}
