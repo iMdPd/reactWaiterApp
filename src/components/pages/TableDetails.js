@@ -23,8 +23,7 @@ export const TableDetails = () => {
     navigate("/");
   };
 
-  if (allTables.length !== 0 && tableData === undefined)
-    return <Navigate to="/" />;
+  if (allTables.length !== 0 && !tableData) return <Navigate to="/" />;
   return (
     <>
       <h1>Table Details</h1>

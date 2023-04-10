@@ -21,7 +21,8 @@ export const TableForm = ({ action, ...params }) => {
   if (maxPeopleAmount < 0) setMaxPeopleAmount("0");
   if (peopleAmount > 10) setPeopleAmount("10");
   if (peopleAmount < 0) setPeopleAmount("0");
-  if (+peopleAmount > +maxPeopleAmount) setPeopleAmount(maxPeopleAmount);
+  if (+maxPeopleAmount < +peopleAmount && maxPeopleAmount)
+    setPeopleAmount(maxPeopleAmount);
   if (bill < 0) setBill(0);
 
   const handlePeopleAmount = (e) =>
