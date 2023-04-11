@@ -95,7 +95,6 @@ export const TableForm = ({ action, ...params }) => {
           <Col xs={3}>
             <Form.Control
               type="number"
-              maxLength={2}
               value={peopleAmount}
               onChange={(e) => setPeopleAmount(e.target.value)}
             />
@@ -104,7 +103,6 @@ export const TableForm = ({ action, ...params }) => {
           <Col xs={3}>
             <Form.Control
               type="number"
-              maxLength={2}
               value={maxPeopleAmount}
               onChange={(e) => setMaxPeopleAmount(e.target.value)}
             />
@@ -127,7 +125,6 @@ export const TableForm = ({ action, ...params }) => {
               type="number"
               className="me-2"
               value={bill}
-              maxLength={4}
               onChange={(e) => setBill(e.target.value)}
             />{" "}
             $
