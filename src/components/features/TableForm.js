@@ -18,12 +18,18 @@ export const TableForm = ({ action, ...params }) => {
   } = useForm();
 
   if (maxPeopleAmount > 10) setMaxPeopleAmount("10");
-  if (maxPeopleAmount < 0) setMaxPeopleAmount("0");
+  if (
+    maxPeopleAmount < 0 ||
+    maxPeopleAmount === "" ||
+    maxPeopleAmount.length > 2
+  )
+    setMaxPeopleAmount("0");
   if (peopleAmount > 10) setPeopleAmount("10");
-  if (peopleAmount < 0) setPeopleAmount("0");
+  if (peopleAmount < 0 || peopleAmount === "" || peopleAmount.length > 2)
+    setPeopleAmount("0");
   if (+maxPeopleAmount < +peopleAmount && maxPeopleAmount)
     setPeopleAmount(maxPeopleAmount);
-  if (bill < 0) setBill(0);
+  if (bill < 0 || bill === "") setBill(0);
 
   const handlePeopleAmount = (e) =>
     e.target.value === "Free"
@@ -88,12 +94,6 @@ export const TableForm = ({ action, ...params }) => {
           </Form.Label>
           <Col xs={3}>
             <Form.Control
-              {...register("peopleValue", {
-                typeOf: "number",
-                required: true,
-                max: 10,
-                min: 0,
-              })}
               type="number"
               maxLength={2}
               value={peopleAmount}
@@ -103,23 +103,12 @@ export const TableForm = ({ action, ...params }) => {
           /
           <Col xs={3}>
             <Form.Control
-              {...register("peopleValue", {
-                typeOf: "number",
-                required: true,
-                max: 10,
-                min: 0,
-              })}
               type="number"
               maxLength={2}
               value={maxPeopleAmount}
               onChange={(e) => setMaxPeopleAmount(e.target.value)}
             />
           </Col>
-          {errors.peopleValue && (
-            <small className="d-flex justify-content-center text-danger mt-1">
-              Please input number from range 1 to 10.
-            </small>
-          )}
         </Row>
       </Form.Group>
 
@@ -135,7 +124,6 @@ export const TableForm = ({ action, ...params }) => {
           </Form.Label>
           <Col xs={5} className="d-flex align-items-center">
             <Form.Control
-              {...register("bill", { required: true, min: 0 })}
               type="number"
               className="me-2"
               value={bill}
@@ -144,11 +132,6 @@ export const TableForm = ({ action, ...params }) => {
             />{" "}
             $
           </Col>
-          {errors.bill && (
-            <small className="d-flex justify-content-center text-danger mt-1">
-              This field can't be empty.
-            </small>
-          )}
         </Form.Group>
       )}
       <Form.Group className="d-flex justify-content-center mt-4">
